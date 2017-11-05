@@ -2068,9 +2068,9 @@ Table.prototype = {
         this.panel = panel;
     },
 
-    // 插入表æ ¼
+    // 插入表格
     _insert: function _insert(rowNum, colNum) {
-        // æ‹¼æŽ¥ table æ¨¡æ¿
+        // 拼接 table 模板
         var r = void 0,
             c = void 0;
         var html = '<table border="0" width="100%" cellpadding="0" cellspacing="0">';
@@ -2089,89 +2089,89 @@ Table.prototype = {
         }
         html += '</table><p><br></p>';
 
-        // æ‰§è¡Œå‘½ä»¤
+        // 执行命令
         var editor = this.editor;
         editor.cmd.do('insertHTML', html);
 
-        // é˜²æ­¢ firefox ä¸‹å‡ºçŽ° resize çš„æŽ§åˆ¶ç‚¹
+        // 防止 firefox 下出现 resize 的控制点
         editor.cmd.do('enableObjectResizing', false);
         editor.cmd.do('enableInlineTableEditing', false);
     },
 
-    // åˆ›å»ºç¼–è¾‘è¡¨æ ¼çš„ panel
+    // 创建编辑表格的 panel
     _createEditPanel: function _createEditPanel() {
         var _this2 = this;
 
-        // å¯ç”¨çš„ id
+        // 可用的 id
         var addRowBtnId = getRandom('add-row');
         var addColBtnId = getRandom('add-col');
         var delRowBtnId = getRandom('del-row');
         var delColBtnId = getRandom('del-col');
         var delTableBtnId = getRandom('del-table');
 
-        // åˆ›å»º panel å¯¹è±¡
+        // 创建 panel 对象
         var panel = new Panel(this, {
             width: 320,
-            // panel åŒ…å«å¤šä¸ª tab
+            // panel 包含多个 tab
             tabs: [{
-                // æ ‡é¢˜
-                title: 'ç¼–è¾‘è¡¨æ ¼',
-                // æ¨¡æ¿
+                // 标题
+                title: '编辑表格',
+                // 模板
                 tpl: '<div>\n                        <div class="w-e-button-container" style="border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;">\n                            <button id="' + addRowBtnId + '" class="left">\u589E\u52A0\u884C</button>\n                            <button id="' + delRowBtnId + '" class="red left">\u5220\u9664\u884C</button>\n                            <button id="' + addColBtnId + '" class="left">\u589E\u52A0\u5217</button>\n                            <button id="' + delColBtnId + '" class="red left">\u5220\u9664\u5217</button>\n                        </div>\n                        <div class="w-e-button-container">\n                            <button id="' + delTableBtnId + '" class="gray left">\u5220\u9664\u8868\u683C</button>\n                        </dv>\n                    </div>',
-                // äº‹ä»¶ç»‘å®š
+                // 事件绑定
                 events: [{
-                    // å¢žåŠ è¡Œ
+                    // 增加行
                     selector: '#' + addRowBtnId,
                     type: 'click',
                     fn: function fn() {
                         _this2._addRow();
-                        // è¿”å›ž trueï¼Œè¡¨ç¤ºè¯¥äº‹ä»¶æ‰§è¡Œå®Œä¹‹åŽï¼Œpanel è¦å…³é—­ã€‚å¦åˆ™ panel ä¸ä¼šå…³é—­
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                         return true;
                     }
                 }, {
-                    // å¢žåŠ åˆ—
+                    // 增加列
                     selector: '#' + addColBtnId,
                     type: 'click',
                     fn: function fn() {
                         _this2._addCol();
-                        // è¿”å›ž trueï¼Œè¡¨ç¤ºè¯¥äº‹ä»¶æ‰§è¡Œå®Œä¹‹åŽï¼Œpanel è¦å…³é—­ã€‚å¦åˆ™ panel ä¸ä¼šå…³é—­
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                         return true;
                     }
                 }, {
-                    // åˆ é™¤è¡Œ
+                    // 删除行
                     selector: '#' + delRowBtnId,
                     type: 'click',
                     fn: function fn() {
                         _this2._delRow();
-                        // è¿”å›ž trueï¼Œè¡¨ç¤ºè¯¥äº‹ä»¶æ‰§è¡Œå®Œä¹‹åŽï¼Œpanel è¦å…³é—­ã€‚å¦åˆ™ panel ä¸ä¼šå…³é—­
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                         return true;
                     }
                 }, {
-                    // åˆ é™¤åˆ—
+                    // 删除列
                     selector: '#' + delColBtnId,
                     type: 'click',
                     fn: function fn() {
                         _this2._delCol();
-                        // è¿”å›ž trueï¼Œè¡¨ç¤ºè¯¥äº‹ä»¶æ‰§è¡Œå®Œä¹‹åŽï¼Œpanel è¦å…³é—­ã€‚å¦åˆ™ panel ä¸ä¼šå…³é—­
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。���则 panel 不会关闭
                         return true;
                     }
                 }, {
-                    // åˆ é™¤è¡¨æ ¼
+                    // 删除表格
                     selector: '#' + delTableBtnId,
                     type: 'click',
                     fn: function fn() {
                         _this2._delTable();
-                        // è¿”å›ž trueï¼Œè¡¨ç¤ºè¯¥äº‹ä»¶æ‰§è¡Œå®Œä¹‹åŽï¼Œpanel è¦å…³é—­ã€‚å¦åˆ™ panel ä¸ä¼šå…³é—­
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                         return true;
                     }
                 }]
             }]
         });
-        // æ˜¾ç¤º panel
+        // 显示 panel
         panel.show();
     },
 
-    // èŽ·å–é€‰ä¸­çš„å•å…ƒæ ¼çš„ä½ç½®ä¿¡æ¯
+    // 获取选中的单元格的位置信息
     _getLocationData: function _getLocationData() {
         var result = {};
         var editor = this.editor;
@@ -2184,13 +2184,13 @@ Table.prototype = {
             return;
         }
 
-        // èŽ·å– td index
+        // 获取 td index
         var $tr = $selectionELem.parent();
         var $tds = $tr.children();
         var tdLength = $tds.length;
         $tds.forEach(function (td, index) {
             if (td === $selectionELem[0]) {
-                // è®°å½•å¹¶è·³å‡ºå¾ªçŽ¯
+                // 记录并跳出循环
                 result.td = {
                     index: index,
                     elem: td,
@@ -2200,13 +2200,13 @@ Table.prototype = {
             }
         });
 
-        // èŽ·å– tr index
+        // 获取 tr index
         var $tbody = $tr.parent();
         var $trs = $tbody.children();
         var trLength = $trs.length;
         $trs.forEach(function (tr, index) {
             if (tr === $tr[0]) {
-                // è®°å½•å¹¶è·³å‡ºå¾ªçŽ¯
+                // 记录并跳出循环
                 result.tr = {
                     index: index,
                     elem: tr,
@@ -2216,13 +2216,13 @@ Table.prototype = {
             }
         });
 
-        // è¿”å›žç»“æžœ
+        // 返回结果
         return result;
     },
 
-    // å¢žåŠ è¡Œ
+    // 增加行
     _addRow: function _addRow() {
-        // èŽ·å–å½“å‰å•å…ƒæ ¼çš„ä½ç½®ä¿¡æ¯
+        // 获取当前单元格的位置信息
         var locationData = this._getLocationData();
         if (!locationData) {
             return;
@@ -2232,7 +2232,7 @@ Table.prototype = {
         var tdData = locationData.td;
         var tdLength = tdData.length;
 
-        // æ‹¼æŽ¥å³å°†æ’å…¥çš„å­—ç¬¦ä¸²
+        // 拼接即将插入的字符串
         var newTr = document.createElement('tr');
         var tpl = '',
             i = void 0;
@@ -2240,13 +2240,13 @@ Table.prototype = {
             tpl += '<td>&nbsp;</td>';
         }
         newTr.innerHTML = tpl;
-        // æ’å…¥
+        // 插入
         $(newTr).insertAfter($currentTr);
     },
 
-    // å¢žåŠ åˆ—
+    // 增加列
     _addCol: function _addCol() {
-        // èŽ·å–å½“å‰å•å…ƒæ ¼çš„ä½ç½®ä¿¡æ¯
+        // 获取当前单元格的位置信息
         var locationData = this._getLocationData();
         if (!locationData) {
             return;
@@ -2258,22 +2258,22 @@ Table.prototype = {
         var $trParent = $currentTr.parent();
         var $trs = $trParent.children();
 
-        // éåŽ†æ‰€æœ‰è¡Œ
+        // 遍历所有行
         $trs.forEach(function (tr) {
             var $tr = $(tr);
             var $tds = $tr.children();
             var $currentTd = $tds.get(tdIndex);
             var name = $currentTd.getNodeName().toLowerCase();
 
-            // new ä¸€ä¸ª tdï¼Œå¹¶æ’å…¥
+            // new 一个 td，并插入
             var newTd = document.createElement(name);
             $(newTd).insertAfter($currentTd);
         });
     },
 
-    // åˆ é™¤è¡Œ
+    // 删除行
     _delRow: function _delRow() {
-        // èŽ·å–å½“å‰å•å…ƒæ ¼çš„ä½ç½®ä¿¡æ¯
+        // 获取当前单元格的位置信息
         var locationData = this._getLocationData();
         if (!locationData) {
             return;
@@ -2283,9 +2283,9 @@ Table.prototype = {
         $currentTr.remove();
     },
 
-    // åˆ é™¤åˆ—
+    // 删除列
     _delCol: function _delCol() {
-        // èŽ·å–å½“å‰å•å…ƒæ ¼çš„ä½ç½®ä¿¡æ¯
+        // 获取当前单���格的位置信息
         var locationData = this._getLocationData();
         if (!locationData) {
             return;
@@ -2297,17 +2297,17 @@ Table.prototype = {
         var $trParent = $currentTr.parent();
         var $trs = $trParent.children();
 
-        // éåŽ†æ‰€æœ‰è¡Œ
+        // 遍历所有行
         $trs.forEach(function (tr) {
             var $tr = $(tr);
             var $tds = $tr.children();
             var $currentTd = $tds.get(tdIndex);
-            // åˆ é™¤
+            // 删除
             $currentTd.remove();
         });
     },
 
-    // åˆ é™¤è¡¨æ ¼
+    // 删除表格
     _delTable: function _delTable() {
         var editor = this.editor;
         var $selectionELem = editor.selection.getSelectionContainerElem();
@@ -2321,7 +2321,7 @@ Table.prototype = {
         $table.remove();
     },
 
-    // è¯•å›¾æ”¹å˜ active çŠ¶æ€
+    // 试图改变 active 状态
     tryChangeActive: function tryChangeActive(e) {
         var editor = this.editor;
         var $elem = this.$elem;
@@ -2343,17 +2343,17 @@ Table.prototype = {
 /*
     menu - video
 */
-// æž„é€ å‡½æ•°
+// 构造函数
 function Video(editor) {
     this.editor = editor;
     this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-play"><i/></div>');
     this.type = 'panel';
 
-    // å½“å‰æ˜¯å¦ active çŠ¶æ€
+    // 当前是否 active 状态
     this._active = false;
 }
 
-// åŽŸåž‹
+// 原型
 Video.prototype = {
     constructor: Video,
 
@@ -2364,20 +2364,20 @@ Video.prototype = {
     _createPanel: function _createPanel() {
         var _this = this;
 
-        // åˆ›å»º id
+        // 创建 id
         var textValId = getRandom('text-val');
         var btnId = getRandom('btn');
 
-        // åˆ›å»º panel
+        // 创建 panel
         var panel = new Panel(this, {
             width: 350,
-            // ä¸€ä¸ª panel å¤šä¸ª tab
+            // 一个 panel 多个 tab
             tabs: [{
-                // æ ‡é¢˜
-                title: 'æ’å…¥è§†é¢‘',
-                // æ¨¡æ¿
+                // 标题
+                title: '插入视频',
+                // 模板
                 tpl: '<div>\n                        <input id="' + textValId + '" type="text" class="block" placeholder="\u683C\u5F0F\u5982\uFF1A<iframe src=... ></iframe>"/>\n                        <div class="w-e-button-container">\n                            <button id="' + btnId + '" class="right">\u63D2\u5165</button>\n                        </div>\n                    </div>',
-                // äº‹ä»¶ç»‘å®š
+                // 事件绑定
                 events: [{
                     selector: '#' + btnId,
                     type: 'click',
@@ -2385,15 +2385,15 @@ Video.prototype = {
                         var $text = $('#' + textValId);
                         var val = $text.val().trim();
 
-                        // æµ‹è¯•ç”¨è§†é¢‘åœ°å€
+                        // 测试用视频地址
                         // <iframe height=498 width=510 src='http://player.youku.com/embed/XMjcwMzc3MzM3Mg==' frameborder=0 'allowfullscreen'></iframe>
 
                         if (val) {
-                            // æ’å…¥è§†é¢‘
+                            // 插入视频
                             _this._insert(val);
                         }
 
-                        // è¿”å›ž trueï¼Œè¡¨ç¤ºè¯¥äº‹ä»¶æ‰§è¡Œå®Œä¹‹åŽï¼Œpanel è¦å…³é—­ã€‚å¦åˆ™ panel ä¸ä¼šå…³é—­
+                        // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                         return true;
                     }
                 }]
@@ -2401,14 +2401,14 @@ Video.prototype = {
             ] // tabs end
         }); // panel end
 
-        // æ˜¾ç¤º panel
+        // 显示 panel
         panel.show();
 
-        // è®°å½•å±žæ€§
+        // 记录属性
         this.panel = panel;
     },
 
-    // æ’å…¥è§†é¢‘
+    // 插入视频
     _insert: function _insert(val) {
         var editor = this.editor;
         editor.cmd.do('insertHTML', val + '<p><br></p>');
@@ -2555,23 +2555,23 @@ Image.prototype = {
                     var $file = $('#' + upFileId);
                     var fileElem = $file[0];
                     if (!fileElem) {
-                        // è¿”å›ž true å¯å…³é—­ panel
+                        // 返回 true 可关闭 panel
                         return true;
                     }
 
-                    // èŽ·å–é€‰ä¸­çš„ file å¯¹è±¡åˆ—è¡¨
+                    // 获取选中的 file 对象列表
                     var fileList = fileElem.files;
                     if (fileList.length) {
                         uploadImg.uploadImg(fileList);
                     }
 
-                    // è¿”å›ž true å¯å…³é—­ panel
+                    // 返回 true 可关闭 panel
                     return true;
                 }
             }]
         }, // first tab end
         {
-            title: 'ç½‘ç»œå›¾ç‰‡',
+            title: '���络图片',
             tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5"/></td>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                </div>',
             events: [{
                 selector: '#' + linkBtnId,
@@ -2584,36 +2584,36 @@ Image.prototype = {
                         uploadImg.insertLinkImg(url);
                     }
 
-                    // è¿”å›ž true è¡¨ç¤ºå‡½æ•°æ‰§è¡Œç»“æŸä¹‹åŽå…³é—­ panel
+                    // 返回 true 表示函数执行结束之后关闭 panel
                     return true;
                 }
             }]
         } // second tab end
         ]; // tabs end
 
-        // åˆ¤æ–­ tabs çš„æ˜¾ç¤º
+        // 判断 tabs 的显示
         var tabsConfigResult = [];
         if ((config.uploadImgShowBase64 || config.uploadImgServer || config.customUploadImg) && window.FileReader) {
-            // æ˜¾ç¤ºâ€œä¸Šä¼ å›¾ç‰‡â€
+            // 显示“上传图片”
             tabsConfigResult.push(tabsConfig[0]);
         }
         if (config.showLinkImg) {
-            // æ˜¾ç¤ºâ€œç½‘ç»œå›¾ç‰‡â€
+            // 显示“网络图片”
             tabsConfigResult.push(tabsConfig[1]);
         }
 
-        // åˆ›å»º panel å¹¶æ˜¾ç¤º
+        // 创建 panel 并显示
         var panel = new Panel(this, {
             width: 300,
             tabs: tabsConfigResult
         });
         panel.show();
 
-        // è®°å½•å±žæ€§
+        // 记录属性
         this.panel = panel;
     },
 
-    // è¯•å›¾æ”¹å˜ active çŠ¶æ€
+    // 试图改变 active 状态
     tryChangeActive: function tryChangeActive(e) {
         var editor = this.editor;
         var $elem = this.$elem;
@@ -2628,10 +2628,10 @@ Image.prototype = {
 };
 
 /*
-    æ‰€æœ‰èœå•çš„æ±‡æ€»
+    所有菜单的汇总
 */
 
-// å­˜å‚¨èœå•çš„æž„é€ å‡½æ•°
+// 存储菜单的构造函数
 var MenuConstructors = {};
 
 MenuConstructors.bold = Bold;
@@ -2671,61 +2671,61 @@ MenuConstructors.video = Video;
 MenuConstructors.image = Image;
 
 /*
-    èœå•é›†åˆ
+    菜单集合
 */
-// æž„é€ å‡½æ•°
+// 构造函数
 function Menus(editor) {
     this.editor = editor;
     this.menus = {};
 }
 
-// ä¿®æ”¹åŽŸåž‹
+// 修改原型
 Menus.prototype = {
     constructor: Menus,
 
-    // åˆå§‹åŒ–èœå•
+    // 初始化菜单
     init: function init() {
         var _this = this;
 
         var editor = this.editor;
         var config = editor.config || {};
-        var configMenus = config.menus || []; // èŽ·å–é…ç½®ä¸­çš„èœå•
+        var configMenus = config.menus || []; // 获取配置中的菜单
 
-        // æ ¹æ®é…ç½®ä¿¡æ¯ï¼Œåˆ›å»ºèœå•
+        // 根据配置信息，创建菜单
         configMenus.forEach(function (menuKey) {
             var MenuConstructor = MenuConstructors[menuKey];
             if (MenuConstructor && typeof MenuConstructor === 'function') {
-                // åˆ›å»ºå•ä¸ªèœå•
+                // 创建单个菜单
                 _this.menus[menuKey] = new MenuConstructor(editor);
             }
         });
 
-        // æ·»åŠ åˆ°èœå•æ 
+        // 添加到菜单栏
         this._addToToolbar();
 
-        // ç»‘å®šäº‹ä»¶
+        // 绑定事件
         this._bindEvent();
     },
 
-    // æ·»åŠ åˆ°èœå•æ 
+    // 添加到菜单栏
     _addToToolbar: function _addToToolbar() {
         var editor = this.editor;
         var $toolbarElem = editor.$toolbarElem;
         var menus = this.menus;
         var config = editor.config;
-        // config.zIndex æ˜¯é…ç½®çš„ç¼–è¾‘åŒºåŸŸçš„ z-indexï¼Œèœå•çš„ z-index å¾—åœ¨å…¶åŸºç¡€ä¸Š +1
+        // config.zIndex 是配置的编辑区域的 z-index，菜单的 z-index 得在其基础上 +1
         var zIndex = config.zIndex + 1;
         objForEach(menus, function (key, menu) {
             var $elem = menu.$elem;
             if ($elem) {
-                // è®¾ç½® z-index
+                // 设置 z-index
                 $elem.css('z-index', zIndex);
                 $toolbarElem.append($elem);
             }
         });
     },
 
-    // ç»‘å®šèœå• click mouseenter äº‹ä»¶
+    // 绑定菜单 click mouseenter 事件
     _bindEvent: function _bindEvent() {
         var menus = this.menus;
         var editor = this.editor;
@@ -2738,7 +2738,7 @@ Menus.prototype = {
             var droplist = menu.droplist;
             var panel = menu.panel;
 
-            // ç‚¹å‡»ç±»åž‹ï¼Œä¾‹å¦‚ bold
+            // 点击类型，例如 bold
             if (type === 'click' && menu.onClick) {
                 $elem.on('click', function (e) {
                     if (editor.selection.getRange() == null) {
@@ -2748,39 +2748,39 @@ Menus.prototype = {
                 });
             }
 
-            // ä¸‹æ‹‰æ¡†ï¼Œä¾‹å¦‚ head
+            // 下拉框，例如 head
             if (type === 'droplist' && droplist) {
                 $elem.on('mouseenter', function (e) {
                     if (editor.selection.getRange() == null) {
                         return;
                     }
-                    // æ˜¾ç¤º
+                    // 显示
                     droplist.showTimeoutId = setTimeout(function () {
                         droplist.show();
                     }, 200);
                 }).on('mouseleave', function (e) {
-                    // éšè—
+                    // 隐藏
                     droplist.hideTimeoutId = setTimeout(function () {
                         droplist.hide();
                     }, 0);
                 });
             }
 
-            // å¼¹æ¡†ç±»åž‹ï¼Œä¾‹å¦‚ link
+            // 弹框类型，例如 link
             if (type === 'panel' && menu.onClick) {
                 $elem.on('click', function (e) {
                     e.stopPropagation();
                     if (editor.selection.getRange() == null) {
                         return;
                     }
-                    // åœ¨è‡ªå®šä¹‰äº‹ä»¶ä¸­æ˜¾ç¤º panel
+                    // 在自定义事件中显示 panel
                     menu.onClick(e);
                 });
             }
         });
     },
 
-    // å°è¯•ä¿®æ”¹èœå•çŠ¶æ€
+    // 尝试修改菜单状态
     changeActive: function changeActive() {
         var menus = this.menus;
         objForEach(menus, function (key, menu) {
@@ -2794,10 +2794,10 @@ Menus.prototype = {
 };
 
 /*
-    ç²˜è´´ä¿¡æ¯çš„å¤„ç†
+    粘贴信息的处理
 */
 
-// èŽ·å–ç²˜è´´çš„çº¯æ–‡æœ¬
+// 获取粘贴的纯文本
 function getPasteText(e) {
     var clipboardData = e.clipboardData || e.originalEvent && e.originalEvent.clipboardData;
     var pasteText = void 0;
@@ -2810,7 +2810,7 @@ function getPasteText(e) {
     return replaceHtmlSymbol(pasteText);
 }
 
-// èŽ·å–ç²˜è´´çš„html
+// 获取粘贴的html
 function getPasteHtml(e, filterStyle) {
     var clipboardData = e.clipboardData || e.originalEvent && e.originalEvent.clipboardData;
     var pasteText = void 0,
@@ -3870,8 +3870,8 @@ UploadImg.prototype = {
                             hooks.error(xhr, editor);
                         }
 
-                        // xhr è¿”å›žçŠ¶æ€é”™è¯¯
-                        _this3._alert('ä¸Šä¼ å›¾ç‰‡å‘ç”Ÿé”™è¯¯', '\u4E0A\u4F20\u56FE\u7247\u53D1\u751F\u9519\u8BEF\uFF0C\u670D\u52A1\u5668\u8FD4\u56DE\u72B6\u6001\u662F ' + xhr.status);
+                        // xhr 返回状态错误
+                        _this3._alert('上传图片发生错误', '\u4E0A\u4F20\u56FE\u7247\u53D1\u751F\u9519\u8BEF\uFF0C\u670D\u52A1\u5668\u8FD4\u56DE\u72B6\u6001\u662F ' + xhr.status);
                         return;
                     }
 
@@ -3885,7 +3885,7 @@ UploadImg.prototype = {
                                 hooks.fail(xhr, editor, result);
                             }
 
-                            _this3._alert('ä¸Šä¼ å›¾ç‰‡å¤±è´¥', 'ä¸Šä¼ å›¾ç‰‡è¿”å›žç»“æžœé”™è¯¯ï¼Œè¿”å›žç»“æžœæ˜¯: ' + result);
+                            _this3._alert('上传图片失败', '上传图片返回结果错误，返回结果是: ' + result);
                             return;
                         }
                     }
@@ -3895,14 +3895,14 @@ UploadImg.prototype = {
                             hooks.fail(xhr, editor, result);
                         }
 
-                        // æ•°æ®é”™è¯¯
-                        _this3._alert('ä¸Šä¼ å›¾ç‰‡å¤±è´¥', 'ä¸Šä¼ å›¾ç‰‡è¿”å›žç»“æžœé”™è¯¯ï¼Œè¿”å›žç»“æžœ errno=' + result.errno);
+                        // 数据错误
+                        _this3._alert('上传图片失败', '上传图片返回结果错误，返回结果 errno=' + result.errno);
                     } else {
                         if (hooks.customInsert && typeof hooks.customInsert === 'function') {
-                            // ä½¿ç”¨è€…è‡ªå®šä¹‰æ’å…¥æ–¹æ³•
+                            // 使用者自定义插入方法
                             hooks.customInsert(_this3.insertLinkImg.bind(_this3), result, editor);
                         } else {
-                            // å°†å›¾ç‰‡æ’å…¥ç¼–è¾‘å™¨
+                            // 将图片插入编辑器
                             var data = result.data || [];
                             data.forEach(function (link) {
                                 _this3.insertLinkImg(link);
@@ -3922,29 +3922,29 @@ UploadImg.prototype = {
                 var beforeResult = hooks.before(xhr, editor, resultFiles);
                 if (beforeResult && (typeof beforeResult === 'undefined' ? 'undefined' : _typeof(beforeResult)) === 'object') {
                     if (beforeResult.prevent) {
-                        // å¦‚æžœè¿”å›žçš„ç»“æžœæ˜¯ {prevent: true, msg: 'xxxx'} åˆ™è¡¨ç¤ºç”¨æˆ·æ”¾å¼ƒä¸Šä¼ 
+                        // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
                         this._alert(beforeResult.msg);
                         return;
                     }
                 }
             }
 
-            // è‡ªå®šä¹‰ headers
+            // 自定义 headers
             objForEach(uploadImgHeaders, function (key, val) {
                 xhr.setRequestHeader(key, val);
             });
 
-            // è·¨åŸŸä¼  cookie
+            // 跨域传 cookie
             xhr.withCredentials = withCredentials;
 
-            // å‘é€è¯·æ±‚
+            // 发送请求
             xhr.send(formdata);
 
-            // æ³¨æ„ï¼Œè¦ return ã€‚ä¸åŽ»æ“ä½œæŽ¥ä¸‹æ¥çš„ base64 æ˜¾ç¤ºæ–¹å¼
+            // 注意，要 return 。不去操作接下来的 base64 显示方式
             return;
         }
 
-        // ------------------------------ æ˜¾ç¤º base64 æ ¼å¼ ------------------------------
+        // ------------------------------ 显示 base64 格式 ------------------------------
         if (uploadImgShowBase64) {
             arrForEach(files, function (file) {
                 var _this = _this3;
@@ -3959,44 +3959,44 @@ UploadImg.prototype = {
 };
 
 /*
-    ç¼–è¾‘å™¨æž„é€ å‡½æ•°
+    编辑器构造函数
 */
 
-// idï¼Œç´¯åŠ 
+// id，累加
 var editorId = 1;
 
-// æž„é€ å‡½æ•°
+// 构造函数
 function Editor(toolbarSelector, textSelector) {
     if (toolbarSelector == null) {
-        // æ²¡æœ‰ä¼ å…¥ä»»ä½•å‚æ•°ï¼ŒæŠ¥é”™
-        throw new Error('é”™è¯¯ï¼šåˆå§‹åŒ–ç¼–è¾‘å™¨æ—¶å€™æœªä¼ å…¥ä»»ä½•å‚æ•°ï¼Œè¯·æŸ¥é˜…æ–‡æ¡£');
+        // 没有传入任何参数，报错
+        throw new Error('错误：初始化编辑器时候未传入任何参数，请查阅文档');
     }
-    // idï¼Œç”¨ä»¥åŒºåˆ†å•ä¸ªé¡µé¢ä¸åŒçš„ç¼–è¾‘å™¨å¯¹è±¡
+    // id，用以区分单个页面不同的编辑器对象
     this.id = 'wangEditor-' + editorId++;
 
     this.toolbarSelector = toolbarSelector;
     this.textSelector = textSelector;
 
-    // è‡ªå®šä¹‰é…ç½®
+    // 自定义配置
     this.customConfig = {};
 }
 
-// ä¿®æ”¹åŽŸåž‹
+// 修改原型
 Editor.prototype = {
     constructor: Editor,
 
-    // åˆå§‹åŒ–é…ç½®
+    // 初始化配置
     _initConfig: function _initConfig() {
-        // _config æ˜¯é»˜è®¤é…ç½®ï¼Œthis.customConfig æ˜¯ç”¨æˆ·è‡ªå®šä¹‰é…ç½®ï¼Œå°†å®ƒä»¬ merge ä¹‹åŽå†èµ‹å€¼
+        // _config 是默认配置，this.customConfig 是用户自定义配置，将它们 merge 之后再赋值
         var target = {};
         this.config = Object.assign(target, config, this.customConfig);
 
-        // å°†è¯­è¨€é…ç½®ï¼Œç”Ÿæˆæ­£åˆ™è¡¨è¾¾å¼
+        // 将语言配置，生成正则表达式
         var langConfig = this.config.lang || {};
         var langArgs = [];
         objForEach(langConfig, function (key, val) {
-            // key å³éœ€è¦ç”Ÿæˆæ­£åˆ™è¡¨è¾¾å¼çš„è§„åˆ™ï¼Œå¦‚â€œæ’å…¥é“¾æŽ¥â€
-            // val å³éœ€è¦è¢«æ›¿æ¢æˆçš„è¯­è¨€ï¼Œå¦‚â€œinsert linkâ€
+            // key 即需要生成正则表达式的规则，如“插入链接”
+            // val 即需要被替换成的语言，如“insert link”
             langArgs.push({
                 reg: new RegExp(key, 'img'),
                 val: val
@@ -4006,7 +4006,7 @@ Editor.prototype = {
         this.config.langArgs = langArgs;
     },
 
-    // åˆå§‹åŒ– DOM
+    // 初始化 DOM
     _initDom: function _initDom() {
         var _this = this;
 
@@ -4017,68 +4017,68 @@ Editor.prototype = {
         var config$$1 = this.config;
         var zIndex = config$$1.zIndex;
 
-        // å®šä¹‰å˜é‡
+        // 定义变量
         var $toolbarElem = void 0,
             $textContainerElem = void 0,
             $textElem = void 0,
             $children = void 0;
 
         if (textSelector == null) {
-            // åªä¼ å…¥ä¸€ä¸ªå‚æ•°ï¼Œå³æ˜¯å®¹å™¨çš„é€‰æ‹©å™¨æˆ–å…ƒç´ ï¼Œtoolbar å’Œ text çš„å…ƒç´ è‡ªè¡Œåˆ›å»º
+            // 只传入一个参数，即是容器的选择器或元素，toolbar 和 text 的元素自行创建
             $toolbarElem = $('<div></div>');
             $textContainerElem = $('<div></div>');
 
-            // å°†ç¼–è¾‘å™¨åŒºåŸŸåŽŸæœ‰çš„å†…å®¹ï¼Œæš‚å­˜èµ·æ¥
+            // 将编辑器区域原有的内容，暂存起来
             $children = $toolbarSelector.children();
 
-            // æ·»åŠ åˆ° DOM ç»“æž„ä¸­
+            // 添加到 DOM 结构中
             $toolbarSelector.append($toolbarElem).append($textContainerElem);
 
-            // è‡ªè¡Œåˆ›å»ºçš„ï¼Œéœ€è¦é…ç½®é»˜è®¤çš„æ ·å¼
+            // 自行创建的，需要配置默认的样式
             $toolbarElem.css('background-color', '#f1f1f1').css('border', '1px solid #ccc');
             $textContainerElem.css('border', '1px solid #ccc').css('border-top', 'none').css('height', '300px');
         } else {
-            // toolbar å’Œ text çš„é€‰æ‹©å™¨éƒ½æœ‰å€¼ï¼Œè®°å½•å±žæ€§
+            // toolbar 和 text 的选择器都有值，记录属性
             $toolbarElem = $toolbarSelector;
             $textContainerElem = $(textSelector);
-            // å°†ç¼–è¾‘å™¨åŒºåŸŸåŽŸæœ‰çš„å†…å®¹ï¼Œæš‚å­˜èµ·æ¥
+            // 将编辑器区域原有的内容，暂存起来
             $children = $textContainerElem.children();
         }
 
-        // ç¼–è¾‘åŒºåŸŸ
+        // 编辑区域
         $textElem = $('<div></div>');
         $textElem.attr('contenteditable', 'true').css('width', '100%').css('height', '100%');
 
-        // åˆå§‹åŒ–ç¼–è¾‘åŒºåŸŸå†…å®¹
+        // 初始化编辑区域内容
         if ($children && $children.length) {
             $textElem.append($children);
         } else {
             $textElem.append($('<p><br></p>'));
         }
 
-        // ç¼–è¾‘åŒºåŸŸåŠ å…¥DOM
+        // 编辑区域加入DOM
         $textContainerElem.append($textElem);
 
-        // è®¾ç½®é€šç”¨çš„ class
+        // 设置通用的 class
         $toolbarElem.addClass('w-e-toolbar');
         $textContainerElem.addClass('w-e-text-container');
         $textContainerElem.css('z-index', zIndex);
         $textElem.addClass('w-e-text');
 
-        // æ·»åŠ  ID
+        // 添加 ID
         var toolbarElemId = getRandom('toolbar-elem');
         $toolbarElem.attr('id', toolbarElemId);
         var textElemId = getRandom('text-elem');
         $textElem.attr('id', textElemId);
 
-        // è®°å½•å±žæ€§
+        // 记录属性
         this.$toolbarElem = $toolbarElem;
         this.$textContainerElem = $textContainerElem;
         this.$textElem = $textElem;
         this.toolbarElemId = toolbarElemId;
         this.textElemId = textElemId;
 
-        // ç»‘å®š onchange
+        // 绑定 onchange
         $textContainerElem.on('click keyup', function () {
             _this.change && _this.change();
         });
@@ -4086,13 +4086,13 @@ Editor.prototype = {
             this.change && this.change();
         });
 
-        //ç»‘å®š onfocus ä¸Ž onblur äº‹ä»¶
+        //绑定 onfocus 与 onblur 事件
         if (config$$1.onfocus || config$$1.onblur) {
-            // å½“å‰ç¼–è¾‘å™¨æ˜¯å¦æ˜¯ç„¦ç‚¹çŠ¶æ€
+            // 当前编辑器是否是焦点状态
             this.isFocus = false;
 
             $(document).on('click', function (e) {
-                //åˆ¤æ–­å½“å‰ç‚¹å‡»å…ƒç´ æ˜¯å¦åœ¨ç¼–è¾‘å™¨å†…
+                //判断当前点击元素是否在编辑器内
                 var isChild = $toolbarSelector.isContain($(e.target));
 
                 if (!isChild) {
@@ -4110,39 +4110,39 @@ Editor.prototype = {
         }
     },
 
-    // å°è£… command
+    // 封装 command
     _initCommand: function _initCommand() {
         this.cmd = new Command(this);
     },
 
-    // å°è£… selection range API
+    // 封装 selection range API
     _initSelectionAPI: function _initSelectionAPI() {
         this.selection = new API(this);
     },
 
-    // æ·»åŠ å›¾ç‰‡ä¸Šä¼ 
+    // 添加图片上传
     _initUploadImg: function _initUploadImg() {
         this.uploadImg = new UploadImg(this);
     },
 
-    // åˆå§‹åŒ–èœå•
+    // 初始化菜单
     _initMenus: function _initMenus() {
         this.menus = new Menus(this);
         this.menus.init();
     },
 
-    // æ·»åŠ  text åŒºåŸŸ
+    // 添加 text 区域
     _initText: function _initText() {
         this.txt = new Text(this);
         this.txt.init();
     },
 
-    // åˆå§‹åŒ–é€‰åŒºï¼Œå°†å…‰æ ‡å®šä½åˆ°å†…å®¹å°¾éƒ¨
+    // 初始化选区，将光标定位到内容尾部
     initSelection: function initSelection(newLine) {
         var $textElem = this.$textElem;
         var $children = $textElem.children();
         if (!$children.length) {
-            // å¦‚æžœç¼–è¾‘å™¨åŒºåŸŸæ— å†…å®¹ï¼Œæ·»åŠ ä¸€ä¸ªç©ºè¡Œï¼Œé‡æ–°è®¾ç½®é€‰åŒº
+            // 如果编辑器区域无内容，添加一个空行，重新设置选区
             $textElem.append($('<p><br></p>'));
             this.initSelection();
             return;
@@ -4151,11 +4151,11 @@ Editor.prototype = {
         var $last = $children.last();
 
         if (newLine) {
-            // æ–°å¢žä¸€ä¸ªç©ºè¡Œ
+            // 新增一个空行
             var html = $last.html().toLowerCase();
             var nodeName = $last.getNodeName();
             if (html !== '<br>' && html !== '<br\/>' || nodeName !== 'P') {
-                // æœ€åŽä¸€ä¸ªå…ƒç´ ä¸æ˜¯ <p><br></p>ï¼Œæ·»åŠ ä¸€ä¸ªç©ºè¡Œï¼Œé‡æ–°è®¾ç½®é€‰åŒº
+                // 最后一个元素不是 <p><br></p>，添加一个空行，重新设置选区
                 $textElem.append($('<p><br></p>'));
                 this.initSelection();
                 return;
@@ -4166,14 +4166,14 @@ Editor.prototype = {
         this.selection.restoreSelection();
     },
 
-    // ç»‘å®šäº‹ä»¶
+    // 绑定事件
     _bindEvent: function _bindEvent() {
-        // -------- ç»‘å®š onchange äº‹ä»¶ --------
+        // -------- 绑定 onchange 事件 --------
         var onChangeTimeoutId = 0;
         var beforeChangeHtml = this.txt.html();
         var config$$1 = this.config;
 
-        // onchange è§¦å‘å»¶è¿Ÿæ—¶é—´
+        // onchange 触发延迟时间
         var onchangeTimeout = config$$1.onchangeTimeout;
         onchangeTimeout = parseInt(onchangeTimeout, 10);
         if (!onchangeTimeout || onchangeTimeout <= 0) {
@@ -4182,18 +4182,18 @@ Editor.prototype = {
 
         var onchange = config$$1.onchange;
         if (onchange && typeof onchange === 'function') {
-            // è§¦å‘ change çš„æœ‰ä¸‰ä¸ªåœºæ™¯ï¼š
+            // 触发 change 的有三个场景：
             // 1. $textContainerElem.on('click keyup')
             // 2. $toolbarElem.on('click')
             // 3. editor.cmd.do()
             this.change = function (compareEveryChar) {
-                // compareEveryChar: true/false åˆ¤æ–­æ˜¯å¦æ¯”è¾ƒæ¯ä¸€ä¸ªå­—ç¬¦ï¼Œé»˜è®¤ false
+                // compareEveryChar: true/false 判断是否比较每一个字符，默认 false
 
-                // åˆ¤æ–­æ˜¯å¦æœ‰å˜åŒ–
+                // 判断是否有变化
                 var currentHtml = this.txt.html();
                 if (currentHtml.length === beforeChangeHtml.length) {
                     if (compareEveryChar) {
-                        // éœ€è¦æ¯”è¾ƒæ¯ä¸€ä¸ªå­—ç¬¦
+                        // 需要比较每一个字符
                         if (currentHtml === beforeChangeHtml) {
                             return;
                         }
@@ -4202,19 +4202,19 @@ Editor.prototype = {
                     }
                 }
 
-                // æ‰§è¡Œï¼Œä½¿ç”¨èŠ‚æµ
+                // 执行，使用节流
                 if (onChangeTimeoutId) {
                     clearTimeout(onChangeTimeoutId);
                 }
                 onChangeTimeoutId = setTimeout(function () {
-                    // è§¦å‘é…ç½®çš„ onchange å‡½æ•°
+                    // 触发配置的 onchange 函数
                     onchange(currentHtml);
                     beforeChangeHtml = currentHtml;
                 }, onchangeTimeout);
             };
         }
 
-        // -------- ç»‘å®š onblur äº‹ä»¶ --------
+        // -------- 绑定 onblur 事件 --------
         var onblur = config$$1.onblur;
         if (onblur && typeof onblur === 'function') {
             this.onblur = function () {
@@ -4223,7 +4223,7 @@ Editor.prototype = {
             };
         }
 
-        // -------- ç»‘å®š onfocus äº‹ä»¶ --------
+        // -------- 绑定 onfocus 事件 --------
         var onfocus = config$$1.onfocus;
         if (onfocus && typeof onfocus === 'function') {
             this.onfocus = function () {
@@ -4232,48 +4232,48 @@ Editor.prototype = {
         }
     },
 
-    // åˆ›å»ºç¼–è¾‘å™¨
+    // 创建编辑器
     create: function create() {
-        // åˆå§‹åŒ–é…ç½®ä¿¡æ¯
+        // 初始化配置信息
         this._initConfig();
 
-        // åˆå§‹åŒ– DOM
+        // 初始化 DOM
         this._initDom();
 
-        // å°è£… command API
+        // 封装 command API
         this._initCommand();
 
-        // å°è£… selection range API
+        // 封装 selection range API
         this._initSelectionAPI();
 
-        // æ·»åŠ  text
+        // 添加 text
         this._initText();
 
-        // åˆå§‹åŒ–èœå•
+        // 初始化菜单
         this._initMenus();
 
-        // æ·»åŠ  å›¾ç‰‡ä¸Šä¼ 
+        // 添加 图片上传
         this._initUploadImg();
 
-        // åˆå§‹åŒ–é€‰åŒºï¼Œå°†å…‰æ ‡å®šä½åˆ°å†…å®¹å°¾éƒ¨
+        // 初始化选区，将光标定位到内容尾部
         this.initSelection(true);
 
-        // ç»‘å®šäº‹ä»¶
+        // 绑定事件
         this._bindEvent();
     }
 };
 
-// æ£€éªŒæ˜¯å¦æµè§ˆå™¨çŽ¯å¢ƒ
+// 检验是否浏览器环境
 try {
     document;
 } catch (ex) {
-    throw new Error('è¯·åœ¨æµè§ˆå™¨çŽ¯å¢ƒä¸‹è¿è¡Œ');
+    throw new Error('请在浏览器环境下运行');
 }
 
 // polyfill
 polyfill();
 
-// è¿™é‡Œçš„ `inlinecss` å°†è¢«æ›¿æ¢æˆ css ä»£ç çš„å†…å®¹ï¼Œè¯¦æƒ…å¯åŽ» ./gulpfile.js ä¸­æœç´¢ `inlinecss` å…³é”®å­—
+// 这里的 `inlinecss` 将被替换成 css 代码的内容，详情可去 ./gulpfile.js 中搜索 `inlinecss` 关键字
 var inlinecss = '.w-e-toolbar,.w-e-text-container,.w-e-menu-panel {  padding: 0;  margin: 0;  box-sizing: border-box;}.w-e-toolbar *,.w-e-text-container *,.w-e-menu-panel * {  padding: 0;  margin: 0;  box-sizing: border-box;}.w-e-clear-fix:after {  content: "";  display: table;  clear: both;}.w-e-toolbar .w-e-droplist {  position: absolute;  left: 0;  top: 0;  background-color: #fff;  border: 1px solid #f1f1f1;  border-right-color: #ccc;  border-bottom-color: #ccc;}.w-e-toolbar .w-e-droplist .w-e-dp-title {  text-align: center;  color: #999;  line-height: 2;  border-bottom: 1px solid #f1f1f1;  font-size: 13px;}.w-e-toolbar .w-e-droplist ul.w-e-list {  list-style: none;  line-height: 1;}.w-e-toolbar .w-e-droplist ul.w-e-list li.w-e-item {  color: #333;  padding: 5px 0;}.w-e-toolbar .w-e-droplist ul.w-e-list li.w-e-item:hover {  background-color: #f1f1f1;}.w-e-toolbar .w-e-droplist ul.w-e-block {  list-style: none;  text-align: left;  padding: 5px;}.w-e-toolbar .w-e-droplist ul.w-e-block li.w-e-item {  display: inline-block;  *display: inline;  *zoom: 1;  padding: 3px 5px;}.w-e-toolbar .w-e-droplist ul.w-e-block li.w-e-item:hover {  background-color: #f1f1f1;}@font-face {  font-family: \'w-e-icon\';  src: url(data:application/x-font-woff;charset=utf-8;base64,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) format(\'truetype\');  font-weight: normal;  font-style: normal;}[class^="w-e-icon-"],[class*=" w-e-icon-"] {  /* use !important to prevent issues with browser extensions that change fonts */  font-family: \'w-e-icon\' !important;  speak: none;  font-style: normal;  font-weight: normal;  font-variant: normal;  text-transform: none;  line-height: 1;  /* Better Font Rendering =========== */  -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale;}.w-e-icon-close:before {  content: "\\f00d";}.w-e-icon-upload2:before {  content: "\\e9c6";}.w-e-icon-trash-o:before {  content: "\\f014";}.w-e-icon-header:before {  content: "\\f1dc";}.w-e-icon-pencil2:before {  content: "\\e906";}.w-e-icon-paint-brush:before {  content: "\\f1fc";}.w-e-icon-image:before {  content: "\\e90d";}.w-e-icon-play:before {  content: "\\e912";}.w-e-icon-location:before {  content: "\\e947";}.w-e-icon-undo:before {  content: "\\e965";}.w-e-icon-redo:before {  content: "\\e966";}.w-e-icon-quotes-left:before {  content: "\\e977";}.w-e-icon-list-numbered:before {  content: "\\e9b9";}.w-e-icon-list2:before {  content: "\\e9bb";}.w-e-icon-link:before {  content: "\\e9cb";}.w-e-icon-happy:before {  content: "\\e9df";}.w-e-icon-bold:before {  content: "\\ea62";}.w-e-icon-underline:before {  content: "\\ea63";}.w-e-icon-italic:before {  content: "\\ea64";}.w-e-icon-strikethrough:before {  content: "\\ea65";}.w-e-icon-table2:before {  content: "\\ea71";}.w-e-icon-paragraph-left:before {  content: "\\ea77";}.w-e-icon-paragraph-center:before {  content: "\\ea78";}.w-e-icon-paragraph-right:before {  content: "\\ea79";}.w-e-icon-terminal:before {  content: "\\f120";}.w-e-icon-page-break:before {  content: "\\ea68";}.w-e-icon-cancel-circle:before {  content: "\\ea0d";}.w-e-toolbar {  display: -webkit-box;  display: -ms-flexbox;  display: flex;  padding: 0 5px;  /* 单个菜单 */}.w-e-toolbar .w-e-menu {  position: relative;  text-align: center;  padding: 5px 10px;  cursor: pointer;}.w-e-toolbar .w-e-menu i {  color: #999;}.w-e-toolbar .w-e-menu:hover i {  color: #333;}.w-e-toolbar .w-e-active i {  color: #1e88e5;}.w-e-toolbar .w-e-active:hover i {  color: #1e88e5;}.w-e-text-container .w-e-panel-container {  position: absolute;  top: 0;  left: 50%;  border: 1px solid #ccc;  border-top: 0;  box-shadow: 1px 1px 2px #ccc;  color: #333;  background-color: #fff;  /* 为 emotion panel 定制的样式 */  /* 上传图片的 panel 定制样式 */}.w-e-text-container .w-e-panel-container .w-e-panel-close {  position: absolute;  right: 0;  top: 0;  padding: 5px;  margin: 2px 5px 0 0;  cursor: pointer;  color: #999;}.w-e-text-container .w-e-panel-container .w-e-panel-close:hover {  color: #333;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-title {  list-style: none;  display: -webkit-box;  display: -ms-flexbox;  display: flex;  font-size: 14px;  margin: 2px 10px 0 10px;  border-bottom: 1px solid #f1f1f1;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-title .w-e-item {  padding: 3px 5px;  color: #999;  cursor: pointer;  margin: 0 3px;  position: relative;  top: 1px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-title .w-e-active {  color: #333;  border-bottom: 1px solid #333;  cursor: default;  font-weight: 700;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content {  padding: 10px 15px 10px 15px;  font-size: 16px;  /* 输入框的样式 */  /* 按钮的样式 */}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input:focus,.w-e-text-container .w-e-panel-container .w-e-panel-tab-content textarea:focus,.w-e-text-container .w-e-panel-container .w-e-panel-tab-content button:focus {  outline: none;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content textarea {  width: 100%;  border: 1px solid #ccc;  padding: 5px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content textarea:focus {  border-color: #1e88e5;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text] {  border: none;  border-bottom: 1px solid #ccc;  font-size: 14px;  height: 20px;  color: #333;  text-align: left;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text].small {  width: 30px;  text-align: center;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text].block {  display: block;  width: 100%;  margin: 10px 0;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text]:focus {  border-bottom: 2px solid #1e88e5;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button {  font-size: 14px;  color: #1e88e5;  border: none;  padding: 5px 10px;  background-color: #fff;  cursor: pointer;  border-radius: 3px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.left {  float: left;  margin-right: 10px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.right {  float: right;  margin-left: 10px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.gray {  color: #999;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.red {  color: #c24f4a;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button:hover {  background-color: #f1f1f1;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container:after {  content: "";  display: table;  clear: both;}.w-e-text-container .w-e-panel-container .w-e-emoticon-container .w-e-item {  cursor: pointer;  font-size: 18px;  padding: 0 3px;  display: inline-block;  *display: inline;  *zoom: 1;}.w-e-text-container .w-e-panel-container .w-e-up-img-container {  text-align: center;}.w-e-text-container .w-e-panel-container .w-e-up-img-container .w-e-up-btn {  display: inline-block;  *display: inline;  *zoom: 1;  color: #999;  cursor: pointer;  font-size: 60px;  line-height: 1;}.w-e-text-container .w-e-panel-container .w-e-up-img-container .w-e-up-btn:hover {  color: #333;}.w-e-text-container {  position: relative;}.w-e-text-container .w-e-progress {  position: absolute;  background-color: #1e88e5;  bottom: 0;  left: 0;  height: 1px;}.w-e-text {  padding: 0 10px;  overflow-y: scroll;}.w-e-text p,.w-e-text h1,.w-e-text h2,.w-e-text h3,.w-e-text h4,.w-e-text h5,.w-e-text table,.w-e-text pre {  margin: 10px 0;  line-height: 1.5;}.w-e-text ul,.w-e-text ol {  margin: 10px 0 10px 20px;}.w-e-text blockquote {  display: block;  border-left: 8px solid #d0e5f2;  padding: 5px 10px;  margin: 10px 0;  line-height: 1.4;  font-size: 100%;  background-color: #f1f1f1;}.w-e-text code {  display: inline-block;  *display: inline;  *zoom: 1;  background-color: #f1f1f1;  border-radius: 3px;  padding: 3px 5px;  margin: 0 3px;}.w-e-text pre code {  display: block;}.w-e-text table {  border-top: 1px solid #ccc;  border-left: 1px solid #ccc;}.w-e-text table td,.w-e-text table th {  border-bottom: 1px solid #ccc;  border-right: 1px solid #ccc;  padding: 3px 5px;}.w-e-text table th {  border-bottom: 2px solid #ccc;  text-align: center;}.w-e-text:focus {  outline: none;}.w-e-text img {  cursor: pointer;}.w-e-text img:hover {  box-shadow: 0 0 5px #333;}.w-e-text img.w-e-selected {  border: 2px solid #1e88e5;}.w-e-text img.w-e-selected:hover {  box-shadow: none;}';
 
 // 将 css 代码添加到 <style> 中
