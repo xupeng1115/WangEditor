@@ -2713,7 +2713,7 @@ _e(function (E, $) {
         // 限制最小为 50px
         txtHeight = txtHeight < 50 ? 50 : txtHeight;
 
-        $txt.height(txtHeight);
+//      $txt.height(txtHeight);
 
         // 记录原始高度
         editor.valueContainerHeight = valueContainerHeight;

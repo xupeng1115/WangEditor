@@ -5,12 +5,11 @@
 /* 按钮颜色 */
 /* tab selected 状态下的颜色 */
 .wangEditor-container {
-	width:786px;
-/*	height:auto;*/
   position: relative;
   background-color: #fff;
   border: 1px solid #ccc;
   z-index: 1;
+  width:788px;
 }
 .wangEditor-container a:focus,
 .wangEditor-container button:focus {
@@ -18,9 +17,8 @@
 }
 .wangEditor-container,
 .wangEditor-container * {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
-  margin:0 auto;
   box-sizing: border-box;
   line-height: 1;
 }
@@ -202,18 +200,12 @@
   box-shadow: 0 1px 3px #999;
 }
 .wangEditor-container .wangEditor-txt {
-  	width: 100%;
-  	height:auto;
-  	text-align: left;
-  	padding: 15px;
-  	padding-top: 0;
- 	margin-top: 5px;
-  	overflow-y: auto;
-  	user-modify: read-only;
-	user-modify: read-write;
-	user-modify: write-only;
-	user-modify: read-write-plaintext-only;
-	-webkit-user-modify: read-write-plaintext-only;
+  width: 100%;
+  text-align: left;
+  padding: 15px;
+  padding-top: 0;
+  margin-top: 5px;
+  overflow-y: auto;
 }
 .wangEditor-container .wangEditor-txt p,
 .wangEditor-container .wangEditor-txt h1,
